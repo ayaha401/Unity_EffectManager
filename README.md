@@ -1,0 +1,2 @@
+# Unity_EffectManager
+UnityでのEffectManager
