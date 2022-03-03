@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class EffectManager : MonoBehaviour
 {
     [SerializeField, Tooltip("Effect")]
@@ -64,7 +63,7 @@ public class EffectManager : MonoBehaviour
             GameObject nonActiveEffectObj = null; 
             for(int i=0;i<_effectObjs.Count;i++)
             {
-                if(_effectObjs[i].activeSelf == false)
+                if(_effectObjs[i].activeSelf == false && _effectObjs[i].name == effectName)
                 {
                     nonActiveEffectObj = _effectObjs[i];
                     break;
@@ -74,19 +73,15 @@ public class EffectManager : MonoBehaviour
             if(nonActiveEffectObj == null)
             {
                 getEffectObj = Instantiate(getEffectObj, pos, Quaternion.identity);
+                getEffectObj.name = effectName;
                 getEffectObj.transform.parent = _parentObj.transform;
                 _effectObjs.Add(getEffectObj);
             }
             else
             {
-                ParticleSystem getEffectParticleSystem = getEffectObj.GetComponent<ParticleSystem>();
-                ParticleSystem nonActiveEffectObjParticleSystem = nonActiveEffectObj.GetComponent<ParticleSystem>();
-                nonActiveEffectObjParticleSystem = getEffectParticleSystem;
                 nonActiveEffectObj.transform.position = pos;
                 nonActiveEffectObj.SetActive(true);
             }
         }
     }
 }
-
-
