@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EffectManager : MonoBehaviour
 {
     [SerializeField, Tooltip("Effect")]
@@ -19,25 +20,32 @@ public class EffectManager : MonoBehaviour
             DontDestroyOnLoad(this);
             _parentObj = this.gameObject;
             effectManagerMaked = true;
+
+            EffectDictionaryUpdate();
         }
         else
         {
+            EffectDictionaryUpdate();
             Destroy(this);
-        }
-
-        foreach (GameObject item in _effectList)
-        {
-            if (_effectDictionary.ContainsKey(item.name) == true)
-            {
-                return;
-            }
-            _effectDictionary.Add(item.name, item);
+            return;
         }
     }
 
     void Start()
     {
 
+    }
+
+    // ディクショナリの中身を更新
+    private void EffectDictionaryUpdate()
+    {
+        foreach (GameObject item in _effectList)
+        {
+            if (_effectDictionary.ContainsKey(item.name) == false)
+            {
+                _effectDictionary.Add(item.name, item);
+            }
+        }
     }
 
     // ディクショナリから指定されたエフェクトオブジェクトを返す
